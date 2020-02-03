@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class TodoList extends Component {
   state = {
     input: "",
-    todos: []
+    todos: [
+      
+    ]
   };
 
   handleSubmit = e => {
@@ -11,16 +13,15 @@ class TodoList extends Component {
 
     // copy todo list
     const editedTodos = [...this.state.todos];
-    if(this.state.input.trim() !== ''){
-      editedTodos.push({content: this.state.input});
+    if (this.state.input.trim() !== "") {
+      editedTodos.push({ content: this.state.input });
 
- this.setState({
-   todos:editedTodos,
-   input:''
- })
+      this.setState({
+        todos: editedTodos,
+        input: ""
+      });
     }
 
- 
     // add a new todo to the list
     // editedTodos.push({ content: ?? });
 
@@ -36,6 +37,15 @@ class TodoList extends Component {
     });
   };
 
+  handleDelete = (index) => {
+    const editedTodos = [...this.state.todos];
+    editedTodos.splice(index, 1);
+    this.setState({
+      todos:editedTodos
+    })
+
+  }
+
   render() {
     return (
       <>
@@ -49,7 +59,12 @@ class TodoList extends Component {
         </form>
         <ul>
           {this.state.todos.map((item, index) => (
-            <li key={index}>{item.content}</li>
+            <li key={index}>
+              {item.content}
+              <span className="delete-container">
+                <button onClick={() => {this.handleDelete(index)}} className="delete">x</button>
+              </span>
+            </li>
           ))}
         </ul>
       </>
